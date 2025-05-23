@@ -1,19 +1,112 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>MANNA MESSIAH CALLS GOSPEL MINISTRIES (MMCGM)</title>
-
-    <link rel="stylesheet" href="style.css">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #003366;
+      }
+      input {
+        width: 80%;
+        padding: 10px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #results > div {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: #f9f9f9;
+      }
+      audio {
+        width: 100%;
+        margin: 10px 0;
+      }
+      pre {
+        white-space: pre-wrap;
+        font-family: inherit;
+        background: #eef6ff;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
 </head>
 <body>
     <h1>Telugu Christian Song Search</h1>
     
-    <input type="text" id="searchInput" placeholder="Enter song or artist name">
+    <input type="text" id="searchInput" placeholder="Enter song or artist name" />
     <button onclick="searchSongs()">Search</button>
     
     <div id="results"></div>
 
-    <script src="script.js"></script>
+    <script>
+      // Sample songs data: add your own songs here!
+      const songs = [
+        {
+          title: "Yesu Nannu Preminchadu",
+          audio: "songs/yesu-nannu-preminchadu.mp3",
+          lyrics: `Yesu nannu preminchadu,
+Thanmaya jeevanam,
+Prabhu tana sneham to,
+Ninnu gelavaga...`
+        },
+        {
+          title: "Prabhu Daasudu",
+          audio: "songs/prabhu-daasudu.mp3",
+          lyrics: `Prabhu daasudu ni,
+Neeku sneham choopinchenu,
+Prathi divasam nee tho,
+Na hrudayam gelavalenu...`
+        }
+        // Add more song objects here
+      ];
+
+      function searchSongs() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
+
+        if (!input) {
+          resultsDiv.innerHTML = '<p>Please enter a search term.</p>';
+          return;
+        }
+
+        const filteredSongs = songs.filter(song => 
+          song.title.toLowerCase().includes(input)
+          // you can extend this to search artist if you add artist property
+        );
+
+        if (filteredSongs.length === 0) {
+          resultsDiv.innerHTML = '<p>No songs found matching your search.</p>';
+          return;
+        }
+
+        filteredSongs.forEach(song => {
+          const songDiv = document.createElement('div');
+          songDiv.innerHTML = `
+            <h3>${song.title}</h3>
+            <audio controls>
+              <source src="${song.audio}" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+            <pre>${song.lyrics}</pre>
+          `;
+          resultsDiv.appendChild(songDiv);
+        });
+      }
+    </script>
 </body>
 </html>
